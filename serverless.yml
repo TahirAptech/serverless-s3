@@ -1,0 +1,17 @@
+service: serverless-s3
+frameworkVersion: '3'
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+  profile: rafae
+
+
+functions:
+  uploadFile:
+    handler: src/functions/uploadFile/index.handler
+    events:
+      - http:
+          path: uploadFile
+          method: post
+          cors: true
