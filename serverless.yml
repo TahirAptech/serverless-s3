@@ -15,3 +15,12 @@ functions:
           path: uploadFile
           method: post
           cors: true
+  s3LambdaTrigger:
+    handler: src/functions/s3Trigger/index.handler
+    events:
+      - s3:
+          bucket: upload-bucket2
+          event: s3:ObjectCreated:*
+          existing: true
+          rules:
+            - prefix: Videos/

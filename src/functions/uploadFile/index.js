@@ -3,6 +3,7 @@ const dayjs = require('dayjs');
 
 module.exports.handler = async (event) => {
   console.log("event", event);
+  console.log("empty console");
   const { fileName , fileType} = JSON.parse(event.body);
   const s3 = new AWS.S3();
   // const randomID = parseInt(Math.random() * 10000000)

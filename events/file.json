@@ -1,0 +1,38 @@
+{
+    "Records": [
+        {
+            "eventVersion": "2.1",
+            "eventSource": "aws:s3",
+            "awsRegion": "us-east-1",
+            "eventTime": "2023-06-20T10:27:14.058Z",
+            "eventName": "ObjectCreated:Put",
+            "userIdentity": {
+                "principalId": "AWS:AROAULZNDEODOIZKJ5JXT:serverless-s3-dev-uploadFile"
+            },
+            "requestParameters": {
+                "sourceIPAddress": "43.246.227.159"
+            },
+            "responseElements": {
+                "x-amz-request-id": "CGGTA526YBK1CV9W",
+                "x-amz-id-2": "92e4YdzE9ixbsQ9RgkWgw/sNpP+USJ6kdJa5VbAmGdfSytY+KmRbi6clp8GXaT5I2xULh68I3LSZt8NbZAdFznlStF8DNsGS"
+            },
+            "s3": {
+                "s3SchemaVersion": "1.0",
+                "configurationId": "serverless-s3-dev-s3LambdaTrigger-a04b1aa4275afc4a9d1759e0d447bb32",
+                "bucket": {
+                    "name": "upload-bucket2",
+                    "ownerIdentity": {
+                        "principalId": "A2OC3EW5L99R6Z"
+                    },
+                    "arn": "arn:aws:s3:::upload-bucket2"
+                },
+                "object": {
+                    "key": "Videos/1687256816-myRecording05",
+                    "size": 11807967,
+                    "eTag": "58a89d3617445052c2a5226ee8fef884",
+                    "sequencer": "0064917F01389A4EEC"
+                }
+            }
+        }
+    ]
+}
