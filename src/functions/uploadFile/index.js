@@ -11,7 +11,7 @@ module.exports.handler = async (event) => {
 
   const params = {
     Bucket: `upload-bucket2/${fileType.includes("image") ? 'Images' : 'Videos'}`,
-    Key: `${dayjs().unix()}-${fileName}`,
+    Key: `${dayjs().unix()}-${fileName.replaceAll(" ","")}`,
     Expires: 1800, // Set the presigned URL expiry time to 30 minutes (in seconds)
     ContentType: fileType //'image/jpeg'
   }

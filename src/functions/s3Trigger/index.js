@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+const {v4: uuid} = require('uuid');
 const s3 = new AWS.S3();
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -13,16 +14,21 @@ module.exports.handler = async (event) => {
   //   Key: sourceVideoKey,
   //   Expires: 1800
   // });
-  const url = "https://upload-bucket2.s3.amazonaws.com/Videos/myvideo.mp4";
-
+  const url = "https://upload-bucket2.s3.amazonaws.com/"+sourceVideoKey;
+  // const url = await s3.getObject({ Bucket: sourceBucket, Key: sourceVideoKey }).promise();
   console.log("getSignedUrl", url);
 
   const execObj = await exec( //{ stdout, stderr }
     `ffmpeg -i ${url} -ss 1 -vframes 1 -y /tmp/output%d.jpg`
   );
   console.log("execObj", execObj);
-  await uploadFile(sourceBucket,"thumbnails/" + "123456"  + "/thumbnail.jpg", "/tmp/output1.jpg", "image/jpg", async (filename) => {
-    console.log(`https://${sourceBucket}.s3.us-west-1.amazonaws.com/${filename}`);
+
+  let fname = sourceVideoKey.replace("Videos/", "").split(".");
+  fname.pop();
+  fname = fname.join()+".jpg";
+  console.log("fname", fname);
+  await uploadFile(sourceBucket,"thumbnails/" +uuid()+ "/"+fname, "/tmp/output1.jpg", "image/jpg", async (filename) => {
+    // console.log(`https://${sourceBucket}.s3.amazonaws.com/${filename}`);
   });
 }
 
