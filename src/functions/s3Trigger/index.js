@@ -27,12 +27,10 @@ module.exports.handler = async (event) => {
   fname.pop();
   fname = fname.join()+".jpg";
   console.log("fname", fname);
-  await uploadFile(sourceBucket,"thumbnails/" +uuid()+ "/"+fname, "/tmp/output1.jpg", "image/jpg", async (filename) => {
-    // console.log(`https://${sourceBucket}.s3.amazonaws.com/${filename}`);
-  });
+  await uploadFile(sourceBucket,"thumbnails/" +uuid()+ "/"+fname, "/tmp/output1.jpg", "image/jpg");
 }
 
-let uploadFile = async (bucket,fileName, location, contentType, callback) => {
+let uploadFile = async (bucket,fileName, location, contentType) => {
   const params = {
     'Bucket' : bucket,
     'Key' : fileName,
@@ -40,11 +38,7 @@ let uploadFile = async (bucket,fileName, location, contentType, callback) => {
     'ContentType' : contentType
   };
   try {
-    let request = s3.putObject(params);
-    let promise = request.promise();
-    await promise.then( async response => {
-      await callback(fileName);
-    });
+    await s3.putObject(params).promise();
   }
   catch (error) {
     console.log(error);
