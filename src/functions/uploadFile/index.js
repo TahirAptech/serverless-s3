@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const dayjs = require('dayjs');
+const {v4: uuid} = require('uuid');
 
 module.exports.handler = async (event) => {
   console.log("event", event);
@@ -10,7 +11,7 @@ module.exports.handler = async (event) => {
   // const Key = `${randomID}`;
 
   const params = {
-    Bucket: `upload-bucket2/${fileType.includes("image") ? 'Images' : 'Videos'}`,
+    Bucket: `upload-bucket2/${fileType.includes("image") ? 'Images' : 'Videos'}/${uuid()}`,
     Key: `${dayjs().unix()}-${fileName.replaceAll(" ","")}`,
     Expires: 1800, // Set the presigned URL expiry time to 30 minutes (in seconds)
     ContentType: fileType //'image/jpeg'
