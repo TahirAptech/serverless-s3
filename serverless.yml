@@ -1,15 +1,17 @@
-service: serverless-s3
+service: serverless-image-video-app
 frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs16.x
   region: us-east-1
-  profile: rafae
-
-
+  profile: thumbnail
+  stage: dev
+  environment:
+    S3_BUCKET: !Ref ImageVideoAppBucket
 functions:
   uploadFile:
     handler: src/functions/uploadFile/index.handler
+    timeout: 10
     events:
       - http:
           path: uploadFile
@@ -17,10 +19,26 @@ functions:
           cors: true
   s3LambdaTrigger:
     handler: src/functions/s3Trigger/index.handler
+    timeout: 10
+        # Comment below section when you are deploying stack for the first time.
     events:
       - s3:
-          bucket: upload-bucket2
+          bucket: !Ref ImageVideoAppBucket
           event: s3:ObjectCreated:*
           existing: true
           rules:
             - prefix: Videos/
+    layers:
+      - arn:aws:lambda:us-east-1:126141637924:layer:mylambdaTriggerLayer:1
+      
+resources:
+  Resources:
+    ImageVideoAppBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: image-video-app
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+          BlockPublicPolicy: false
+          IgnorePublicAcls: false
+          RestrictPublicBuckets: false

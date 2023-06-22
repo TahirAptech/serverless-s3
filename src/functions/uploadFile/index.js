@@ -1,17 +1,16 @@
 const AWS = require('aws-sdk');
+const s3 = new AWS.S3();
 const dayjs = require('dayjs');
 const {v4: uuid} = require('uuid');
+const bucket = process.env.S3_BUCKET;
 
 module.exports.handler = async (event) => {
   console.log("event", event);
   console.log("empty console");
   const { fileName , fileType} = JSON.parse(event.body);
-  const s3 = new AWS.S3();
-  // const randomID = parseInt(Math.random() * 10000000)
-  // const Key = `${randomID}`;
 
   const params = {
-    Bucket: `upload-bucket2/${fileType.includes("image") ? 'Images' : 'Videos'}/${uuid()}`,
+    Bucket: `${bucket}/${fileType.includes("image") ? 'Images' : 'Videos'}/${uuid()}`,
     Key: `${dayjs().unix()}-${fileName.replaceAll(" ","")}`,
     Expires: 1800, // Set the presigned URL expiry time to 30 minutes (in seconds)
     ContentType: fileType //'image/jpeg'
