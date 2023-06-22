@@ -22,7 +22,7 @@ module.exports.handler = async (event) => {
   fname.pop();
   fname = fname.join() + ".jpg";
 
-  let name = `thumbnails/${fname}`;
+  let name = `Thumbnails/${fname}`;
   console.log("fileName", name);
 
   await uploadFile(sourceBucket, name, "/tmp/output1.jpg", "image/jpg");
